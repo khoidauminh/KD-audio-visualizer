@@ -1,7 +1,7 @@
 ## KD's audio visualizer
 A small web pop-up window that displays the waveform/spectrum/sonogram of the input signal.
 
-I wrote this HTML/CSS/Javascript program because I was frustrated for not being able to find any linux audio visualizers that satisfy me. Most of the programs I've been using come either as a Windows VST (which I have to run with Wine because I use a Linux OS), a almost-good linux program that has an annoying bug, or one written in C that's old as heck. 
+I wrote this HTML/CSS/Javascript program because I was frustrated for not being able to find any linux audio visualizers that satisfy me. Most of the programs I've been using come either as a Windows VST (which I have to run with Wine because I use a Linux OS), a good linux program that unfortunately has an annoying bug, or one written in C that's old as heck. 
 
 ## How to use
 Open the kdav_main.html with your browser (I've tested on Chrome and Firefox with Ok results). Once the pop-up window opens, click the 'start' button and choose your desired device. 
