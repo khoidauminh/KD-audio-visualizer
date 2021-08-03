@@ -12,13 +12,7 @@ function visualize(canvas, bufferL, bufferR, display, settings) {
 		default:
 	}
 }
-/*
 
-what does the flip parameter do? 
-Sometimes the stream buffer doesn't get updated before passing to the visualizer, producing a frame the same as the one before, making the animation inconsistent.
-The Spectrum visualizer process stream at half the length, the flip makes sure they always use the different half of the stream every time, even if the buffer is already updated.
-
-*/
 function drawWaveform(canvas, bufferL, bufferR, settings) {
 	var ctx = canvas.getContext('2d');
 	
@@ -81,9 +75,6 @@ function drawWaveform(canvas, bufferL, bufferR, settings) {
 	
 	ctx.stroke();
 	ctx.closePath();
-	
-	
-	return (flip + 1) % 2;
 }
 
 function drawSpectrum(canvas, bufferL, bufferR, settings) {
@@ -119,7 +110,6 @@ function drawSpectrum(canvas, bufferL, bufferR, settings) {
 		//console.log('a');
 	}
 
-	return (flip + 1) % 2;
 }
 
 function drawSonogram(canvas, bufferL, bufferR, settings) {
@@ -156,7 +146,6 @@ function drawSonogram(canvas, bufferL, bufferR, settings) {
 		ctx.fillRect(x, y+barDis, shiftingRange, barDisH);
 	}
 	
-	return (flip + 1) % 2;
 }
 
 /* 
