@@ -1,19 +1,9 @@
-function getFreqDomain(buffer, freqMin = 0, freqMax = 200000, freqReso = 1024, flip) {
-	const l = buffer.length;
+function getFreqDomain(buffer, freqMin = 0, freqMax = 200000, freqReso = 1024) {
+	const 
+	bufferLength = buffer.length;
 	
 	var 
 	freqTable = [];
-	
-	
-	if (flip) {
-		var 
-		start = bufferLength,
-		bufferLength = l;
-	} else {
-		var 
-		start = 0,
-		bufferLength = l/2;
-	}
 	
 	for (var currentBand = 0; currentBand < freqReso ; currentBand++) {
 		const 
@@ -23,7 +13,7 @@ function getFreqDomain(buffer, freqMin = 0, freqMax = 200000, freqReso = 1024, f
 		var
 		weight = 0;
 				
-		for (var sample = start ; sample < bufferLength ; sample++) {
+		for (var sample = 0 ; sample < bufferLength ; sample++) {
 			weight += Math.cos(-revolutions*(sample/l))*buffer[sample];
 		}
 		//weight /= bufferLength;
@@ -33,6 +23,8 @@ function getFreqDomain(buffer, freqMin = 0, freqMax = 200000, freqReso = 1024, f
 	
 	return freqTable;
 }
+
+// these are for testing purposes and probably useless at the moment.
 
 function generateSineWave(freq = 100, vol = 1, dur = 1024, existingStream = []) {
 	const revolutions = freq*Math.PI;
