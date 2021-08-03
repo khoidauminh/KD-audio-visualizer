@@ -1,13 +1,13 @@
-function visualize(canvas, bufferL, bufferR, flip, display, settings) {
+function visualize(canvas, bufferL, bufferR, display, settings) {
 	switch (display) {
 		case 'spectrum':
-			drawSpectrum(canvas, bufferL, bufferR, flip, settings);
+			drawSpectrum(canvas, bufferL, bufferR, settings);
 			break;
 		case 'waveform':
-			drawWaveform(canvas, bufferL, bufferR, flip, settings);
+			drawWaveform(canvas, bufferL, bufferR, settings);
 			break;
 		case 'sonogram':
-			drawSonogram(canvas, bufferL, bufferR, flip, settings);
+			drawSonogram(canvas, bufferL, bufferR, settings);
 			break;
 		default:
 	}
@@ -19,7 +19,7 @@ Sometimes the stream buffer doesn't get updated before passing to the visualizer
 The Spectrum visualizer process stream at half the length, the flip makes sure they always use the different half of the stream every time, even if the buffer is already updated.
 
 */
-function drawWaveform(canvas, bufferL, bufferR, flip, settings) {
+function drawWaveform(canvas, bufferL, bufferR, settings) {
 	var ctx = canvas.getContext('2d');
 	
 	//console.log(stream[0]);
@@ -86,13 +86,13 @@ function drawWaveform(canvas, bufferL, bufferR, flip, settings) {
 	return (flip + 1) % 2;
 }
 
-function drawSpectrum(canvas, bufferL, bufferR, flip, settings) {
+function drawSpectrum(canvas, bufferL, bufferR, settings) {
 	var 
 	ctx = canvas.getContext('2d');
 	const
 	freqResoH = settings.reso/2,
-	freqTableL = getFreqDomain(bufferL, settings.minF, settings.maxF, freqResoH, flip),
-	freqTableR = getFreqDomain(bufferR, settings.minF, settings.maxF, freqResoH, flip);
+	freqTableL = getFreqDomain(bufferL, settings.minF, settings.maxF, freqResoH),
+	freqTableR = getFreqDomain(bufferR, settings.minF, settings.maxF, freqResoH);
 	
 	settings.L = smoothing(settings.L, freqTableL, settings.s);
 	settings.R = smoothing(settings.R, freqTableR, settings.s);
@@ -122,13 +122,13 @@ function drawSpectrum(canvas, bufferL, bufferR, flip, settings) {
 	return (flip + 1) % 2;
 }
 
-function drawSonogram(canvas, bufferL, bufferR, flip, settings) {
+function drawSonogram(canvas, bufferL, bufferR, settings) {
 	var ctx = canvas.getContext('2d');
 	
 	const
 	freqResoH = settings.reso/2,
-	freqTableL = getFreqDomain(bufferL, settings.minF, settings.maxF, freqResoH, flip),
-	freqTableR = getFreqDomain(bufferR, settings.minF, settings.maxF, freqResoH, flip),
+	freqTableL = getFreqDomain(bufferL, settings.minF, settings.maxF, freqResoH),
+	freqTableR = getFreqDomain(bufferR, settings.minF, settings.maxF, freqResoH),
 	shiftData = ctx.getImageData(0, 0, canvas.width, canvas.height),
 	shiftingRange = canvas.width*settings.w/3,
 	x = canvas.width - shiftingRange,
