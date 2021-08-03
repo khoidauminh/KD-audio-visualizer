@@ -8,10 +8,11 @@ Open the kdav_main.html with your browser (I've tested on Chrome and Firefox wit
 
 _note: the sonogram visualizer is still being worked on._
 
-Sliders/parameters : 
-Waveform widowing : controlls the display time range of the oscilloscope and the sonogram. 
-Rounghness : smaller value results in smoother spectrum animation, but will appear smaller.
-Min frequency : 0 to 700 Hz.
-Max frequency : 1000 to 20 000 Hz.
-Height/brightness : controlls height of spectrum band columns and brightness of sonogram.
-Frequency resolution : how many bands to process/display.
+Sliders/parameters | Description
+----------- | -----------
+Waveform widowing | controlls the display time range of the oscilloscope and the sonogram. 
+Rounghness | smaller value results in smoother spectrum animation, but will appear smaller.
+Min frequency | 0 to 700 Hz.
+Max frequency | 1000 to 20 000 Hz.
+Height/brightness | controlls height of spectrum band columns and brightness of sonogram.
+Frequency resolution | how many bands to process/display.
