@@ -9,7 +9,7 @@ const constraints = { audio : true };
 function processAudio(audioContext, canvas, stream, buffer, display, settings) {
 	var source = audioContext.createMediaStreamSource(stream);
 	const BUFFER_LENGTH = buffer;
-	var bufferL = [], bufferR = [], node, flip = 0, refreshRate = 70;
+	var bufferL = [], bufferR = [], node, refreshRate = 70;
 	
 	if(!audioContext.createScriptProcessor){
        node = audioContext.createJavaScriptNode(BUFFER_LENGTH, 2, 2);
@@ -27,7 +27,7 @@ function processAudio(audioContext, canvas, stream, buffer, display, settings) {
     // if the ScriptProcessorNode is not connected to an output the "onaudioprocess" event is not triggered in chrome
     node.connect(audioContext.destination);
     
-    setInterval(() => { flip = visualize(canvas, bufferL, bufferR, flip, display.d, settings); }, 20);
+    setInterval(() => { visualize(canvas, bufferL, bufferR, display.d, settings); }, 20);
     
   
 }
