@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<meta charset = 'utf-8'>
+
+<head><title>KD's Audio Visualizer</title></head>
+
+<body>
+
+<style>
+
+.sonogram {
+	box-sizing : border-box;
+	width : 100%;
+	height : 100%;
+	position : fixed;
+}
+
+.waveform {
+	display : block;
+}
+
+.settings {
+	display : block;
+}
+
+.sonogram {
+	display : block;
+}
+
+label {
+	font-size : 15px;
+	text-align: center;
+}
+
+input[type = 'range'] {
+		height : 12px;	
+		outline : none;
+		border-radius : 0px;
+		cursor: pointer;
+}
+
+</style>
+
+<div class = '.sonogram'>
+	<canvas id='mc' width = '256' height = '256' style = 'border : 1px solid black'></canvas>
+</div>
+
+
+<script src = 'js/mathFunctions.js'></script>
+<script src = 'js/spectrum.js'></script>
+<script src = 'js/visualizer.js'></script>
+<script src = 'js/audioInput.js'></script>
+
+<button type = 'button' onclick= 'changeToWave()'>waveform</button>
+<button type = 'button' onclick= 'changeToSpec()'>spectrum</button>
+<button type = 'button' onclick= 'changeToSono()'>sonogram</button>
+<button id = 'start' type = 'button' onclick= 'start()'>Start</button>
+<br>
+<br>
+<div class = 'waveform'>
+<input type = 'range' id = 'wLength' name = 'window' min = '0.05' max = '2' step = '0.01' value = '0.1'></input><label>Waveform windowing</label>
+</div>
+<div class = 'settings'>
+<input type = 'range' id = 's1moothing' name = 'smooth' min = '0.01' max = '1' value = '0.5' step = '0.05'></input><label>Roughness</label><br>
+<input type = 'range' id = 's1minfreq' name = 'min frequency' min = '0' max = '700' value = '0'></input><label>Min frequency</label><br>
+<input type = 'range' id = 's1maxfreq' name = 'max frequency' min = '1000' max = '20000' value = '700'></input><label>Max frequency</label><br>
+<input type = 'range' id = 's1height' name = 'height' min = '0' max = '30' value = '6' step = '0.5'></input><label>Height/Brightness</label><br>
+<input type = 'range' id = 's1freqreso' name = 'freqreso' min = '256' max = '1024' value = '512' step = '32'></input><label>Frequency Resolution</label><br>
+</div>
+
+<script>
+'use strict';
+
+var ctx = document.getElementById('mc').getContext('2d');
+const REFRESH_RATE = 1000/60;
+var 
+display = { d : "waveform" },
+settings = { L : [], R : [], s : 0.5, minF : 0, maxF : 700, h : 6, w : 0.2, reso : 512};
+
+for (var i = 0 ; i < settings.reso ; i++) {
+	settings.L.push(0.0);
+	settings.R.push(0.0);
+}
+
+ctx.fillStyle = '#003300';
+ctx.strokeStyle = '#003300';
+
+const 
+changeToWave = () => { display.d = 'waveform'; 
+	document.getElementsByClassName('waveform').visibility = 'block'; 
+	document.getElementsByClassName('settings').visibility = 'none';
+},
+changeToSpec = () => { 
+	display.d = 'spectrum'; 
+	document.getElementsByClassName('waveform').visibility = 'none'; 
+	document.getElementsByClassName('spectrum').visibility = 'block';	
+},
+changeToSono = () => { 
+	display.d = 'sonogram'; 
+	document.getElementsByClassName('waveform').visibility = 'none'; 
+	document.getElementsByClassName('spectrum').visibility = 'block';	
+};
+
+function start() {
+	
+	settings.w = document.getElementById('wLength').value;
+	settings.s = document.getElementById('s1moothing').value;
+	settings.minF = document.getElementById('s1minfreq').value;
+	settings.maxF = document.getElementById('s1maxfreq').value;
+	settings.h = document.getElementById('s1height').value;
+	settings.reso = document.getElementById('s1freqreso').value;
+	
+	initAudioInput(document.getElementById('mc'), constraints, 1024, display, settings);
+
+	document.getElementById('start').hidden = true;
+
+	//console.log(map(0, -10, 10, 0, 100));
+}
+
+//console.log(document.getElementById('wLength').value);
+
+document.getElementById('wLength').oninput = function() {
+	settings.w = this.value;
+}
+
+document.getElementById('s1moothing').oninput = function() {
+	settings.s = this.value;
+}
+
+document.getElementById('s1minfreq').oninput = function() {
+	settings.minF = this.value;
+}
+
+document.getElementById('s1maxfreq').oninput = function() {
+	settings.maxF = this.value;
+}
+
+document.getElementById('s1height').oninput = function() {
+	settings.h = this.value;
+}
+
+document.getElementById('s1freqreso').oninput = function() {
+	settings.reso = this.value;
+}
+
+
+</script>
+
+</body>
+
+</html>
