@@ -27,7 +27,8 @@ function drawWaveform(canvas, bufferL, bufferR, settings) {
 	shiftData = ctx.getImageData(0, 0, canvas.width, canvas.height),
 	shiftingRange = canvas.width*settings.w,
 	shiftedX = canvas.width - shiftingRange,
-	amp = settings.h/10;
+	amp = settings.h/10,
+	length = bufferL.length;
 	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	
@@ -35,26 +36,15 @@ function drawWaveform(canvas, bufferL, bufferR, settings) {
 	//ctx.fillRect(0, 0, canvas.width, canvas.height);
 	ctx.putImageData(shiftData, -shiftingRange, 0);
 	
-	
-	
-	
-	var length = bufferL.length, start = 0;
-	if (flip) {
-		start = length;
-		length *= 2;
-	 }
-	 
-	 var px = 0; py = 0;
-	
 	ctx.moveTo(0, canvas.width/2);
 	ctx.beginPath();
 	
 	ctx.strokeStyle = '#00AA00';
-	for (var i = start ; i < length ; i++) {
+	for (var i = 0; i < length ; i++) {
 		
 		const 
 		y = map(bufferL[i]*amp, -1, 1, 0, canvas.height),
-		x = map(i, start, length, shiftedX, canvas.width);
+		x = map(i, 0, length, shiftedX, canvas.width);
 		
 		ctx.lineTo(x, y);
 	}
@@ -64,11 +54,11 @@ function drawWaveform(canvas, bufferL, bufferR, settings) {
 	ctx.moveTo(0, canvas.width/2);
 	ctx.beginPath();
 	ctx.strokeStyle = '#0000AA';
-	for (var i = start ; i < length ; i++) {
+	for (var i = 0 ; i < length ; i++) {
 		
 		const 
 		y = map(bufferR[i]*amp, -1, 1, 0, canvas.height),
-		x = map(i, start, length, shiftedX, canvas.width);
+		x = map(i, 0, length, shiftedX, canvas.width);
 		
 		ctx.lineTo(x, y);
 	}
