@@ -1,6 +1,9 @@
+// The spectrum will shrink the audio stream by conbining 2 halves of them together. 
+// Refresh rate is put on front.
+
 function getFreqDomain(buffer, freqMin = 0, freqMax = 200000, freqReso = 1024) {
 	const 
-	bufferLength = buffer.length;
+	bufferLengthH = buffer.length/2;
 	
 	var 
 	freqTable = [];
@@ -13,8 +16,8 @@ function getFreqDomain(buffer, freqMin = 0, freqMax = 200000, freqReso = 1024) {
 		var
 		weight = 0;
 				
-		for (var sample = 0 ; sample < bufferLength ; sample++) {
-			weight += Math.cos(-revolutions*(sample/l))*buffer[sample];
+		for (var sample = 0 ; sample < bufferLengthH ; sample++) {
+			weight += Math.cos(-revolutions*(sample/bufferLengthH))*(buffer[sample] + buffer[sample+bufferLengthH])/2;
 		}
 		//weight /= bufferLength;
 		
