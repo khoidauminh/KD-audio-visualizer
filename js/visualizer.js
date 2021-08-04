@@ -89,8 +89,8 @@ function drawSpectrum(canvas, bufferL, bufferR, settings) {
 	for (var i = 0 ; i < fL; i++) {
 		const 	
 		x = (i/fL)*canvas.width*2,
-		heightL = (.75+i/fL)*settings.L[i]*settings.h*2,
-		heightR = (.75+i/fL)*settings.R[i]*settings.h*2;
+		heightL = (.75+i/fL)*settings.L[i]*settings.h*4,
+		heightR = (.75+i/fL)*settings.R[i]*settings.h*4;
 		
 		ctx.fillStyle = '#00AA00';
 		ctx.fillRect(x, canvas.height-heightL, barDisH, heightL);
@@ -129,10 +129,10 @@ function drawSonogram(canvas, bufferL, bufferR, settings) {
 		//color1 = ctx.getImageData(prevColorX, y, 1, 1).data[1],
 		//color2 = clamp(0, (1 + 6*pos/freqTaLength)*freqTable[pos]*16000, 255);
 		
-		ctx.fillStyle = 'rgb(0, ' + clamp(0, (1 + 6*pos/freqTaLength)*freqTableL[pos]*settings.h*3, 255) + ', 0)';
+		ctx.fillStyle = 'rgb(0, ' + clamp(0, (1 + 6*pos/freqTaLength)*freqTableL[pos]*settings.h*6, 255) + ', 0)';
 		ctx.fillRect(x, y, shiftingRange, barDisH);
 		
-		ctx.fillStyle = 'rgb(0, 0, ' + clamp(0, (1 + 6*pos/freqTaLength)*freqTableR[pos]*settings.h*3, 255) + ')';
+		ctx.fillStyle = 'rgb(0, 0, ' + clamp(0, (1 + 6*pos/freqTaLength)*freqTableR[pos]*settings.h*6, 255) + ')';
 		ctx.fillRect(x, y+barDis, shiftingRange, barDisH);
 	}
 	
