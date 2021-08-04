@@ -1,3 +1,5 @@
+const pi2 = 2*Math.PI;
+
 function map(value, inMin = -1, inMax = 1, outMin = 0, outMax = 1) {
 	var middle = clamp(inMin, value, inMax);
 		
@@ -21,6 +23,15 @@ function forceMono(bufferL, bufferR) {
 		out.push((bufferL[i] + bufferR[i])/2);
 	}
 	return out;
+}
+
+function trianglew(angle) {
+	return 2*Math.abs(-(angle % pi2)/Math.PI+1)-1;
+}
+
+function squarew(angle) {
+	if (angle % pi2 > Math.PI) return -1;
+	return 1;
 }
 
 // amount sits in range [0..1]
